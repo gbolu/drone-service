@@ -1,0 +1,68 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+enum DroneModel {
+  Lightweight
+  Middleweight
+  Cruiserweight
+  Heavyweight
+}
+
+enum DroneState {
+  IDLE
+  LOADING
+  LOADED
+  DELIVERING
+  DELIVERED
+  RETURNING
+}
+
+model Drone {
+  id              Int               @id @default(autoincrement())
+  createdAt       DateTime          @default(now())
+  updatedAt       DateTime          @updatedAt
+  serialNumber    String            @unique
+  model           DroneModel        @default(Lightweight)
+  maxWeight       Float             @default(0)
+  battery         Float             @default(100)
+  state           DroneState        @default(IDLE)
+  DroneMedication DroneMedication[]
+
+  @@index([model])
+  @@index([state])
+}
+
+model Medication {
+  id          Int      @id @default(autoincrement())
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+  name        String   @unique
+  description String?
+  weight      Float    @default(0)
+  stock       Int      @default(0)
+  code        String   @unique
+  image       String?
+}
+
+model DroneMedication {
+  id           Int      @id @default(autoincrement())
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+  droneId      Int
+  medicationId Int
+  drone        Drone    @relation(fields: [droneId], references: [id])
+  quantity     Int      @default(0)
+  weight       Float    @default(0)
+
+  @@index([droneId])
+  @@index([medicationId])
+}

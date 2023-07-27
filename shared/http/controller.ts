@@ -15,8 +15,8 @@ export class Controller {
   protected logger = logger
   protected name: string
 
-  constructor(serviceName?: string) {
-    this.name = serviceName || 'default'
+  constructor(serviceName: string) {
+    this.name = serviceName
   }
 
   protected logInfo(message: string) {
@@ -44,6 +44,12 @@ export class Controller {
     response: Response
   ) {
     const { error, statusCode } = serviceResponse
+
+    if (statusCode === StatusCodes.INTERNAL_SERVER_ERROR) {
+      this.logError(error)
+      return this.sendErrorResponse(this.createAppError({}), response)
+    }
+
     return this.sendErrorResponse(new AppError(error, statusCode), response)
   }
 

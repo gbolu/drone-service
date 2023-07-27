@@ -2,9 +2,9 @@ import { Request, Response, NextFunction } from 'express'
 import Joi, { ValidationError } from 'joi'
 
 import { AppError } from '@utilities/appError.js'
-import { VALIDATION_TYPE, ValidationType } from '@http/validations/utilities.js'
 import { ErrorCodes } from '@shared/errors/errorCodes.js'
 import { errorResponse } from '@shared/http/index.js'
+import { VALIDATION_TYPE, ValidationType } from '../validations'
 
 export const validateRequest =
   (schema: Joi.AnySchema, validationType: ValidationType) =>

@@ -2,8 +2,13 @@ import express, { NextFunction, Request, Response, Router } from 'express'
 import cors from 'cors'
 
 import { AppError } from '@utilities/index.js'
-import { globalErrorHandlerMiddleware, httpLoggerMiddleware } from '@http/middleware/index.js'
+import {
+  globalErrorHandlerMiddleware,
+  httpLoggerMiddleware
+} from '@domains/shared/http/middleware/index.js'
 import { ErrorCodes } from '@shared/errors/errorCodes.js'
+
+import { DroneHTTPRoutes } from '@domains/drone'
 
 const app = express()
 
@@ -13,6 +18,8 @@ app.use(express.urlencoded({ extended: true }))
 app.use(cors())
 
 const apiRouter = Router()
+
+apiRouter.use('/drones', DroneHTTPRoutes)
 
 app.use('/api', apiRouter)
 

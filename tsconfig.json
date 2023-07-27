@@ -12,14 +12,13 @@
 
     /* Modules */
     "module": "NodeNext" /* Specify what module code is generated. */,
-    "moduleResolution": "nodenext" /* Specify how TypeScript looks up a file from a given module specifier. */,
+    "moduleResolution": "Node" /* Specify how TypeScript looks up a file from a given module specifier. */,
     "paths": {
       "@utilities/*": ["./utilities/*"],
       "@domains/*": ["./domains/*"],
       "@shared/*": ["./shared/*"],
       "@config/*": ["./config/*"],
       "@database/*": ["./database/*"],
-      "@http/*": ["./http/*"],
       "@external/*": ["./external/*"]
     },
     "sourceMap": true /* Create source map files for emitted JavaScript files. */,

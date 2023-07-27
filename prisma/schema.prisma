@@ -36,6 +36,7 @@ model Drone {
   battery         Float             @default(100)
   state           DroneState        @default(IDLE)
   DroneMedication DroneMedication[]
+  DroneLog        DroneLog[]
 
   @@index([model])
   @@index([state])
@@ -63,4 +64,17 @@ model DroneMedication {
 
   @@index([droneId])
   @@index([medicationId])
+}
+
+model DroneLog {
+  id        Int        @id @default(autoincrement())
+  createdAt DateTime   @default(now())
+  updatedAt DateTime   @updatedAt
+  droneId   Int
+  drone     Drone      @relation(fields: [droneId], references: [id])
+  state     DroneState
+  battery   Float
+
+  @@index([droneId])
+  @@index([state])
 }

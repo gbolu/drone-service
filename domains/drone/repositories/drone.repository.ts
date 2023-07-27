@@ -148,6 +148,26 @@ export class DroneRepository extends Repository {
     })
   }
 
+  async getFirstDrone(): Promise<Drone | null> {
+    return await this._prisma.drone.findFirst({
+      orderBy: {
+        id: 'asc'
+      }
+    })
+  }
+
+  async getDronesWithCursor(cursor: number = 1, limit: number = 1): Promise<Drone[]> {
+    const drones = await this._prisma.drone.findMany({
+      take: limit,
+      skip: 1,
+      cursor: {
+        id: cursor
+      }
+    })
+
+    return drones
+  }
+
   private isDroneAvailable(drone: Drone): boolean {
     return drone.state === DroneState.IDLE || drone.state === DroneState.LOADING
   }

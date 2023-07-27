@@ -3,7 +3,7 @@ import { DroneRepository } from './repositories/drone.repository'
 import { MedicationRepository } from './repositories/medication.repository'
 import { DroneMedicationRepository } from './repositories/droneMedication.repository'
 import { Drone, DroneState } from '@prisma/client'
-import { CreateDroneDTO } from './validations'
+import { CreateDroneDTO, LoadMedicationDTO } from './dto'
 import { ServiceResponse } from '@shared/service'
 import { StatusCodes } from 'http-status-codes'
 import { GetResourcesResponse, GetResourcesWithPaginationDTO } from '@domains/shared'
@@ -76,6 +76,28 @@ export class DroneService extends Service {
       return {
         success: true,
         data: drones,
+        statusCode: StatusCodes.OK
+      }
+    } catch (error) {
+      return this.sendErrorServiceResponse(error)
+    }
+  }
+
+  async loadMedication(droneId: number, data: LoadMedicationDTO): Promise<ServiceResponse<Drone>> {
+    try {
+      await this._droneRepository.loadDrone(droneId, data)
+
+      const loadedDrone = await this._droneRepository.getDroneWithMedicationsById(droneId)
+      if (!loadedDrone)
+        return {
+          success: false,
+          statusCode: StatusCodes.NOT_FOUND,
+          error: `Drone not found`
+        }
+
+      return {
+        success: true,
+        data: loadedDrone,
         statusCode: StatusCodes.OK
       }
     } catch (error) {

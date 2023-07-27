@@ -45,11 +45,10 @@ model Medication {
   id          Int      @id @default(autoincrement())
   createdAt   DateTime @default(now())
   updatedAt   DateTime @updatedAt
-  name        String   @unique
+  name        String
   description String?
   weight      Float    @default(0)
-  stock       Int      @default(0)
-  code        String   @unique
+  code        String
   image       String?
 }
 
@@ -60,7 +59,6 @@ model DroneMedication {
   droneId      Int
   medicationId Int
   drone        Drone    @relation(fields: [droneId], references: [id])
-  quantity     Int      @default(0)
   weight       Float    @default(0)
 
   @@index([droneId])

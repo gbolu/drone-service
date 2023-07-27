@@ -6,9 +6,12 @@
   "engines": {
     "node": ">=18.0.0"
   },
+  "prisma": {
+    "seed": "ts-node --transpile-only prisma/seed.ts"
+  },
   "scripts": {
     "start": "npm run migrate && node dist/main.js",
-    "migrate": "npx prisma migrate dev",
+    "migrate": "npx prisma migrate dev && npx prisma db seed",
     "dev": "nodemon dist/main.js",
     "build": "rimraf ./build && npx tsc && npx tsc-alias",
     "watch": "npx tsc && (concurrently \"npx tsc -w\" \"tsc-alias -w\")",

@@ -1,5 +1,5 @@
 import { Drone, DroneState, Medication, PrismaClient } from '@prisma/client'
-import { CreateDroneDTO } from '../dto'
+import { CreateDroneDTO, UpdateDroneDTO } from '../dto'
 import { GetResourcesResponse, GetResourcesWithPaginationDTO } from '@domains/shared'
 import { Repository } from '@domains/shared/repository'
 import { AppError } from '@utilities/appError'
@@ -20,6 +20,15 @@ export class DroneRepository extends Repository {
 
   async createDrone(data: CreateDroneDTO): Promise<Drone> {
     return await this._prisma.drone.create({ data })
+  }
+
+  async updateDrone(droneId: number, data: Partial<UpdateDroneDTO>): Promise<Drone> {
+    return await this._prisma.drone.update({
+      where: {
+        id: droneId
+      },
+      data
+    })
   }
 
   async getDroneBySerialNumber(serialNumber: string): Promise<Drone | null> {

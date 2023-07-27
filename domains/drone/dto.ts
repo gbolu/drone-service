@@ -1,6 +1,6 @@
 import * as joi from 'joi'
 
-import { DroneModel } from '@prisma/client'
+import { DroneModel, DroneState } from '@prisma/client'
 import { type } from 'os'
 
 export type CreateDroneDTO = {
@@ -18,6 +18,22 @@ export const CreateDroneSchema = joi.object({
     .required(),
   maxWeight: joi.number().required().min(1).max(500),
   battery: joi.number().required().min(1).max(100)
+})
+
+export type UpdateDroneDTO = {
+  serialNumber?: string
+  model?: DroneModel
+  maxWeight?: number
+  battery?: number
+  state?: DroneState
+}
+
+export const UpdateDroneSchema = joi.object({
+  serialNumber: joi.string().min(1).max(100),
+  model: joi.string().valid(...Object.values(DroneModel)),
+  maxWeight: joi.number().min(1).max(500),
+  battery: joi.number().min(1).max(100),
+  state: joi.string().valid(...Object.values(DroneState))
 })
 
 export const CreateMedicationSchema = joi.object({

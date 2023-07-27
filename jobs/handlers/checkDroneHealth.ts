@@ -2,7 +2,8 @@ import { DroneRepository } from '@domains/drone/repositories/drone.repository'
 import { DroneLogRepository } from '@domains/drone/repositories/droneLogs.repository'
 
 export const checkDroneHealth = async () => {
-  console.log('Checking drone health...')
+  const timePeriod = new Date().toISOString()
+  console.log(`Checking drone health for time period: ${timePeriod}...`)
 
   let drone = await new DroneRepository().getFirstDrone()
   if (!drone) {
@@ -26,4 +27,6 @@ export const checkDroneHealth = async () => {
 
     drone = fetchedDrones[0]
   }
+
+  console.log(`Finished checking drone health for time period: ${timePeriod}...`)
 }

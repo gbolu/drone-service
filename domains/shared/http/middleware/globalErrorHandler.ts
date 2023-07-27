@@ -1,7 +1,7 @@
-import { AppError } from '../../utilities/appError.js'
+import { AppError } from '../../../../utilities/appError.js'
 import { Request, Response, NextFunction } from 'express'
-import { Config } from '../../config/env.config.js'
-import { NODE_LEVELS } from '../../config/types/_enums.js'
+import { Config } from '../../../../config/env.config.js'
+import { NODE_LEVELS } from '../../../../config/types/_enums.js'
 import { debugResponse, errorResponse } from '@shared/http/index.js'
 
 export async function globalErrorHandlerMiddleware(

@@ -3,7 +3,6 @@ export type GetResourcesWithPaginationDTO = {
   limit: number
   searchQuery?: string
   filter?: string
-  userID?: number
 }
 
 export type GetResourcesResponse<T> = {

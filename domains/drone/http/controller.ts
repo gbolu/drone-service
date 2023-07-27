@@ -62,4 +62,40 @@ export class DroneController extends Controller {
       return this.sendSuccessResponse(drone, `Drone retrieved successfully`, StatusCodes.OK, res)
     }
   )
+
+  updateDrone = catchAsync(
+    async (req: Request, res: Response, next: NextFunction): Promise<any> => {
+      const droneResponse = await this._droneService.updateDrone(Number(req.params.id), req.body)
+
+      if (!droneResponse.success) {
+        return this.sendServiceErrorResponse(droneResponse, res)
+      }
+
+      const { data: drone } = droneResponse
+
+      return this.sendSuccessResponse(drone, `Drone updated successfully`, StatusCodes.OK, res)
+    }
+  )
+
+  loadMedication = catchAsync(
+    async (req: Request, res: Response, next: NextFunction): Promise<any> => {
+      const droneMedicationResponse = await this._droneService.loadMedication(
+        Number(req.params.id),
+        req.body
+      )
+
+      if (!droneMedicationResponse.success) {
+        return this.sendServiceErrorResponse(droneMedicationResponse, res)
+      }
+
+      const { data: drone } = droneMedicationResponse
+
+      return this.sendSuccessResponse(
+        drone,
+        `Drone medication loaded successfully`,
+        StatusCodes.CREATED,
+        res
+      )
+    }
+  )
 }

@@ -74,3 +74,9 @@ export type CreateDroneMedicationDTO = {
   medicationId: number
   weight: number
 }
+
+export type CreateDroneLogDTO = {
+  droneId: number
+  state: DroneState
+  battery: number
+}

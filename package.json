@@ -7,7 +7,8 @@
     "node": ">=18.0.0"
   },
   "scripts": {
-    "start": "node dist/main.js",
+    "start": "npm run migrate && node dist/main.js",
+    "migrate": "npx prisma migrate dev",
     "dev": "nodemon dist/main.js",
     "build": "rimraf ./build && npx tsc && npx tsc-alias",
     "watch": "npx tsc && (concurrently \"npx tsc -w\" \"tsc-alias -w\")",
@@ -29,6 +30,7 @@
     "joi": "^17.9.2",
     "lodash": "^4.17.21",
     "morgan": "^1.10.0",
+    "node-cron": "^3.0.2",
     "randomstring": "^1.3.0",
     "winston": "^3.10.0"
   },
@@ -39,6 +41,7 @@
     "@types/lodash": "^4.14.196",
     "@types/morgan": "^1.9.4",
     "@types/node": "^20.4.5",
+    "@types/node-cron": "^3.0.8",
     "@types/randomstring": "^1.1.8",
     "concurrently": "^8.2.0",
     "prettier": "^3.0.0",

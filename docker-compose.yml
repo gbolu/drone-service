@@ -9,20 +9,16 @@ services:
     depends_on:
       - postgres
     environment:
-      POSTGRES_HOST: postgres
-      POSTGRES_PORT: 5432
-      POSTGRES_USER: blusalt_server
-      POSTGRES_PASSWORD: password123!
-      POSTGRES_DB: blusalt_drone_db
-    volumes:
-      - ./blusalt_drone_api:/app
+      DATABASE_URL: postgresql://blusalt_server:password123@postgres:5432/blusalt_drone_db?schema=public
+      NODE_ENV: development
+      PORT: 4000
 
   postgres:
-    image: postgres:latest
+    image: postgres:15.3-alpine
     restart: always
     environment:
       POSTGRES_USER: blusalt_server
-      POSTGRES_PASSWORD: password123!
+      POSTGRES_PASSWORD: password123
       POSTGRES_DB: blusalt_drone_db
     ports:
       - '5432:5432'
